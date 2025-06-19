@@ -1,9 +1,5 @@
 use onlineCourseDB;
 
-//////////////////////////// 1. STUDENTS ////////////////////////////
-// Insert 10 students with diverse interests and addresses
-/* Columns: _id, name, email, interests, address, dates */
-
 const students = [
   { _id: ObjectId("665000000000000000000001"), firstName: "Ivan",  lastName: "Petrov",  email: "ivan.p@example.com",  birthDate: ISODate("1995-05-12"), registeredAt: ISODate("2025-01-15"), interests:["JavaScript","Node","Football"], address:{city:"Sofia", country:"BG"}},
   { _id: ObjectId("665000000000000000000002"), firstName: "Maria", lastName: "Georgieva", email: "maria.g@example.com", birthDate: ISODate("1998-03-30"), registeredAt: ISODate("2025-02-11"), interests:["Python","Data Science"], address:{city:"Plovdiv", country:"BG"}},
@@ -19,7 +15,6 @@ const students = [
 
 db.students.insertMany(students);
 
-/////////////////////////// 2. INSTRUCTORS //////////////////////////
 const instructors = [
   { _id:ObjectId("665000000000000000000101"), firstName:"Dimitar", lastName:"Petrov",  email:"d.petrov@teach.com",  bio:"10y Java dev",   expertise:["Java","Spring"], hiredAt:ISODate("2024-10-01") },
   { _id:ObjectId("665000000000000000000102"), firstName:"Olga",    lastName:"Ivanova", email:"o.ivanova@teach.com", bio:"Full‑stack JS",  expertise:["Node","React"], hiredAt:ISODate("2024-11-15") },
@@ -35,8 +30,7 @@ const instructors = [
 
 db.instructors.insertMany(instructors);
 
-//////////////////////////// 3. COURSES /////////////////////////////
-/* Use instructorId references */
+
 const courses = [
   { _id:ObjectId("665000000000000000001001"), title:"Java Fundamentals",    description:"OOP & basics",       category:"Programming", durationHours:20, level:"Beginner", instructorId:ObjectId("665000000000000000000101"), tags:["Java","OOP"], price:49.99, createdAt:ISODate("2025-03-10") },
   { _id:ObjectId("665000000000000000001002"), title:"Spring Boot API",      description:"REST with Spring",   category:"Backend",     durationHours:25, level:"Intermediate", instructorId:ObjectId("665000000000000000000101"), tags:["Spring","REST"], price:59.99, createdAt:ISODate("2025-03-15") },
@@ -52,8 +46,6 @@ const courses = [
 
 db.courses.insertMany(courses);
 
-/////////////////////////// 4. ENROLLMENTS //////////////////////////
-/* Pair up first 10 students with first 10 courses */
 const enrollments = [];
 for (let i = 0; i < 10; i++) {
   enrollments.push({
@@ -67,8 +59,6 @@ for (let i = 0; i < 10; i++) {
 }
 db.enrollments.insertMany(enrollments);
 
-///////////////////////////// 5. REVIEWS ////////////////////////////
-/* Reviews only for completed enrollments */
 const reviews = enrollments.filter(e => e.status === "completed").map((e,idx) => ({
   _id: ObjectId("6652000000000000000000" + (idx+1).toString().padStart(2,"0")),
   courseId: e.courseId,
