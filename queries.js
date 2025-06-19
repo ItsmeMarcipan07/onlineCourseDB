@@ -2,7 +2,6 @@ use onlineCourseDB;
 
 //////////////////////////// 1. STUDENTS /////////////////////////////
 // READ – get all students
-// ---------------------------------------------------------------
 db.students.find();
 
 // READ – filter by single field (city Sofia)
@@ -12,14 +11,12 @@ db.students.find({"address.city":"Sofia"});
 db.students.find({interests:"React", "address.city":"Varna"});
 
 // UPDATE – add new interest to a specific student
-// (example: Ivan Petrov)
 db.students.updateOne({email:"ivan.p@example.com"}, { $addToSet:{interests:"Docker"} });
 
 // DELETE – remove a student who never logged in (none in sample, use birthDate before 1990 for demo)
 db.students.deleteOne({birthDate:{$lt:ISODate("1990-01-01")}});
 
 // AGGREGATE – number of students per city
-// ---------------------------------------------------------------
 db.students.aggregate([
   { $group:{ _id:"$address.city", total:{$sum:1} } },
   { $sort:{ total:-1 } }
